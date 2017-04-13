@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="0dp"
+    android:scrollbars="none" >
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.juli.myapplication.MainActivity">
+    <ImageView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Саратовский национальный исследовательский государственный университет им. Н.Г. Чернышевского"
+        android:layout_below="@id/header"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:textSize="10pt"
+        />
+
+    <ImageView
+        android:id="@+id/news1"
+        android:layout_width="100pt"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textHeader"
+        android:src="@drawable/news1"/>
+    <TextView
+        android:id="@+id/textNews1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Саратовский университет впервые вошёл в рейтинг U-Multirank"
+        android:layout_toRightOf="@id/news1"
+        android:layout_below="@id/textHeader"
+        android:layout_marginTop="20pt"
+        />
+
+    <ImageView
+        android:id="@+id/news2"
+        android:layout_width="100pt"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/news1"
+        android:src="@drawable/news2" />
+    <TextView
+        android:id="@+id/textNews2"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Проект СГУ вошёл в 9 лучших технологических стартапов GenerationS"
+        android:layout_below="@id/news1"
+        android:layout_toRightOf="@id/news2"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="20pt"
+        />
+    </RelativeLayout>
+</ScrollView>
