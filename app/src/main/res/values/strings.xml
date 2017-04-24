@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="ok">OK</string>
+    <string name="app_name">SGU news</string>
     <string name="enter_url">Enter URL</string>
+    <string name="ok">OK</string>
 </resources>

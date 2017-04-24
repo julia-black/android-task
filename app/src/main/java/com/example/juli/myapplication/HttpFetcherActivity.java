@@ -1,84 +1,40 @@
 package com.example.juli.myapplication;
 
 import android.app.Activity;
-import android.os.AsyncTask;
+import android.app.LoaderManager;
+import android.content.Intent;
+import android.content.Loader;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+public class HttpFetcherActivity extends Activity implements LoaderManager.LoaderCallbacks<List<Article>> {
+    public final List<Article> articles = new ArrayList<>();
+    private ArrayAdapter<Article> adapter;
 
-public class HttpFetcherActivity extends Activity {
-    private int loadedCount = 0;
-
-    private void loadData(String url){
-        new FetchTask(url).execute();
+    @Override
+    public Loader<List<Article>> onCreateLoader(int id, Bundle args) { //id -
+        return new DataLoader(this);
     }
-    private class FetchTask extends AsyncTask<Void, Void, String> {
 
-        private final String url;
-
-        public FetchTask(String url) {
-            this.url = url;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-        @Override
-        protected String doInBackground(Void... params) {
-            //исполняется в параллельном потоке
-            String res = null;
-            try {
-                URL url = new URL(this.url);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                try{
-                    InputStream inputStream = conn.getInputStream();
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    try {
-                        byte[] buf = new byte[32 * 1024];
-                        while (true){
-                            int bytesRead = inputStream.read(buf);
-                            if(bytesRead < 0)
-                                break;
-                            outputStream.write(buf);
-                        }
-                        res = outputStream.toString("UTF-8");
-                    }
-                    finally {
-                        inputStream.close();
-                        outputStream.close();
-                    }
-                }
-                finally{
-                    conn.disconnect();
-                }
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return res;
-        }
-        @Override
-        protected void onPostExecute(String response) {
-            //то что на главном потоке
-            TextView responseText = (TextView) findViewById(R.id.response_text);
-            responseText.setText(response != null ? response : "Error");
-
-        }
+    @Override
+    public void onLoadFinished(Loader<List<Article>> loader, List<Article> articles) {
+        this.articles.clear();
+        this.articles.addAll(articles);
+        adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onLoaderReset(Loader<List<Article>> loader) {
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,9 +43,26 @@ public class HttpFetcherActivity extends Activity {
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText urlEdit = (EditText) findViewById(R.id.url_edit);
-                loadData(urlEdit.getText().toString());
+                getLoaderManager().restartLoader(0, null, HttpFetcherActivity.this);
             }
         });
+
+        ListView listView = (ListView) findViewById(R.id.articles_list);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, articles);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Article article = (Article) parent.getItemAtPosition(position);
+                String url = article.getLink();
+                Intent openBrowserIntent = new Intent(Intent.ACTION_VIEW);
+                openBrowserIntent.setData(Uri.parse(url));
+                startActivity(openBrowserIntent);
+            }
+        });
+        getLoaderManager().initLoader(0, null, this);
     }
+
+    private static final String TAG = "SGUnews";
 }
