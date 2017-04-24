@@ -43,7 +43,6 @@ public class XmlParser {
         }
         return news;
     }
-
     private String read(XmlPullParser parser, String text) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, null, text);
         String title = parser.nextText();

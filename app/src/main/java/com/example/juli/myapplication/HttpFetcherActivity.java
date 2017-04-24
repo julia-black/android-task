@@ -23,7 +23,6 @@ public class HttpFetcherActivity extends Activity implements LoaderManager.Loade
     public Loader<List<Article>> onCreateLoader(int id, Bundle args) { //id -
         return new DataLoader(this);
     }
-
     @Override
     public void onLoadFinished(Loader<List<Article>> loader, List<Article> articles) {
         this.articles.clear();

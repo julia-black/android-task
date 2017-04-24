@@ -50,7 +50,6 @@ public class DataLoader extends AsyncTaskLoader<List<Article>>{
                 } finally {
                     istream.close();
                 }
-
             } finally {
                 conn.disconnect();
             }

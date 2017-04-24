@@ -22,6 +22,8 @@ public class Article {
     }
 
     public String toString(){
-        return "Title: "+ title + "\nDate: "+ pubDate +"\nLink: " + link;
+
+        return
+                "Title: "+ title + "\nDate: "+ pubDate +"\nLink: " + link;
     }
 }
