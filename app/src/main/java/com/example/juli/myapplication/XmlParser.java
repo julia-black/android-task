@@ -38,9 +38,8 @@ public class XmlParser {
             } else if (name.equals("pubDate")) {
                 pubDate = read(parser, "pubDate");
                 news.add(new Article(title, description, pubDate, link));
-            } else {
+            } else
                 skip(parser);
-            }
         }
         return news;
     }
