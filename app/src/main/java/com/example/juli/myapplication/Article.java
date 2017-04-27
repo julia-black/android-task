@@ -5,10 +5,10 @@ package com.example.juli.myapplication;
  */
 
 public class Article {
-    private String title;
-    private String description;
-    private String pubDate;
-    private String link;
+    public String title;
+    public String description;
+    public String pubDate;
+    public String link;
 
     public Article(String title, String description, String pubData, String link) {
         this.title = title;

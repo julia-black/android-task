@@ -13,11 +13,8 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/ok" />
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
     </LinearLayout>
+
     <ListView
         android:id="@+id/articles_list"
         android:layout_width="match_parent"

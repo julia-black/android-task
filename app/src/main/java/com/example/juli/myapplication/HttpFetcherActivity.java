@@ -17,7 +17,8 @@ import java.util.List;
 
 public class HttpFetcherActivity extends Activity implements LoaderManager.LoaderCallbacks<List<Article>> {
     public final List<Article> articles = new ArrayList<>();
-    private ArrayAdapter<Article> adapter;
+
+    private  NewsItemAdapter dataAdapter;
 
     @Override
     public Loader<List<Article>> onCreateLoader(int id, Bundle args) { //id -
@@ -27,7 +28,7 @@ public class HttpFetcherActivity extends Activity implements LoaderManager.Loade
     public void onLoadFinished(Loader<List<Article>> loader, List<Article> articles) {
         this.articles.clear();
         this.articles.addAll(articles);
-        adapter.notifyDataSetChanged();
+        this.dataAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -47,8 +48,9 @@ public class HttpFetcherActivity extends Activity implements LoaderManager.Loade
         });
 
         ListView listView = (ListView) findViewById(R.id.articles_list);
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, articles);
-        listView.setAdapter(adapter);
+        //adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, articles);
+        this.dataAdapter = new NewsItemAdapter(this, articles);
+        listView.setAdapter(dataAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
